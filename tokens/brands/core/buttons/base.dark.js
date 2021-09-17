@@ -3,18 +3,18 @@ module.exports = {
         "button": {
             "primary": {
                 "background": { "value": "{color.white.value}" },
-                "foreground": { "value": "{color.slate.value}" },
+                "text": { "value": "{color.slate.value}" },
                 "hover": {
                     "background": { "value": "{color.teal-30.value}" },
-                    "foreground": { "value": "{color.white.value}" },
+                    "text": { "value": "{color.white.value}" },
                 },
                 "active": {
                     "background": { "value": "{color.teal-20.value}" },
-                    "foreground": { "value": "{color.white.value}" },
+                    "text": { "value": "{color.white.value}" },
                 },
                 "focus": {
                     "background": { "value": "{color.teal-30.value}" },
-                    "foreground": { "value": "{color.white.value}" },
+                    "text": { "value": "{color.white.value}" },
                 }
             }
         }

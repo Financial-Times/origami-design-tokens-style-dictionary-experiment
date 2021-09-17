@@ -4,7 +4,7 @@ module.exports = {
             "page": { "value": "{color.slate.value}" },
             "logo": { "value": "{color.white.value}" },
         },
-        "foreground": {
+        "text": {
             "logo": { "value": "{color.slate.value}" },
         }
     }
