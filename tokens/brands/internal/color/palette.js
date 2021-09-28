@@ -21,6 +21,12 @@ const tokens = {
     "jade": { "value": "#00994d" },
     "crimson": { "value": "#cc0000" },
     "mandarin": { "value": "#ff8833" },
+
+
+    // @todo keep these ft.com colours for logos and labels?
+    "paper": { "value": "#fff1e5" },
+    "ft-pink": { "value": "#fcd0b1" },
+    "ft-grey": { "value": "#333333" },
   }
 }
 

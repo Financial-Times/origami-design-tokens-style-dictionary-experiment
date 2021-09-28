@@ -1,7 +1,7 @@
 module.exports = {
     "color": {
         "background": {
-            "page": { "value": "{color.white.value}" },
+            "page": { "value": "{color.paper.value}" },
             "logo": { "value": "{color.ft-pink.value}" },
         },
         "text": {

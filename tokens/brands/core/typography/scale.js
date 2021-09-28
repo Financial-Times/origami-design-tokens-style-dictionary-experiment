@@ -1,8 +1,8 @@
 module.exports = {
   "size": {
 	"font": {
-		"-2": { "value": "12px" },
-		"-1": { "value": "14px" },
+		"negative-2": { "value": "12px" },
+		"negative-1": { "value": "14px" },
 		"0": { "value": "16px" },
 		"1": { "value": "18px" },
 		"2": { "value": "20px" },
@@ -18,8 +18,8 @@ module.exports = {
   },
   "line-height": {
 	"font": {
-		"-2": { "value": "16px" },
-		"-1": { "value": "16px" },
+		"negative-2": { "value": "16px" },
+		"negative-1": { "value": "16px" },
 		"0": { "value": "20px" },
 		"1": { "value": "20px" },
 		"2": { "value": "24px" },
