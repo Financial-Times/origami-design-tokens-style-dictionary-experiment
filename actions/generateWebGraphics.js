@@ -4,7 +4,7 @@ const template = require('lodash/template');
 module.exports = {
 
     do: (dictionary, config) => {
-        const { buildPath, mode } = config;
+        const { buildPath } = config;
 
         dictionary.allProperties
             .filter(token => {
@@ -17,7 +17,7 @@ module.exports = {
                 const svg = src(dictionary.properties);
 
                 // Make sure the directory exists and write the new SVG file
-                const outputPath = `${buildPath || ''}/images/${name}-custom-properties-web.svg`;
+                const outputPath = `${buildPath || ''}/${name}-custom-properties-web.svg`;
                 fs.ensureFileSync(outputPath);
                 fs.writeFileSync(outputPath, svg);
                 console.log(`✔︎  ${outputPath}`);

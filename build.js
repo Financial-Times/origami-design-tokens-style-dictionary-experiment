@@ -3,8 +3,8 @@ const darkModeStyleDictionary = require('./config/dark-mode-style-dictionary');
 
 
 console.log(`☀️ Building light mode...`);
-defaultStyleDictionary.buildAllPlatforms();
+defaultStyleDictionary('core').buildAllPlatforms();
 
 console.log(`\n\n🌙 Building dark mode...`);
-darkModeStyleDictionary.buildAllPlatforms();
+darkModeStyleDictionary('core').buildAllPlatforms();
 
