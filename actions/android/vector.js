@@ -12,7 +12,7 @@ module.exports = {
     // and resolved dictionary object containing all the tokens and the platform configuration
     // of the platform that called this action.
     do: (dictionary, config) => {
-        const { path, buildPath, mode } = config;
+        const { assetBuildPath, mode } = config;
 
         dictionary.allProperties
             .filter(token => {
@@ -35,14 +35,8 @@ module.exports = {
                 // to translate it to a PNG or Android Vector Drawable
                 const svg = src(dictionary.properties);
 
-                // Make sure the directory exists and write the new SVG file
-                const outputPath = `${buildPath || ''}/${name}-${mode}.svg`;
-                fs.ensureFileSync(outputPath);
-                fs.writeFileSync(outputPath, svg);
-                console.log(`✔︎  ${outputPath}`);
-
                 // This will take the SVG and convert it into Android Vector Drawable format
-                androidVector({ path, name, svg, mode });
+                androidVector({ assetBuildPath, name, svg, mode });
             });
     },
 
@@ -57,18 +51,18 @@ module.exports = {
  * @param {Object} options
  * @param {String} options.svg - The content of the SVG that will be turned into a vector drawable. The SVG content at this point should have had all the token references inside of it resolved.
  * @param {String} options.name - The name of the image token
- * @param {String} options.path - The build path for Android. This will be defined in the configuration
+ * @param {String} options.assetBuildPath - The build path for Android. This will be defined in the configuration
  * @param {String} options.mode - The current mode (light or dark) Style Dictionary is being run in.
  */
-function androidVector({ path, svg, name, mode }) {
+function androidVector({ assetBuildPath, svg, name, mode }) {
     // Android doesn't support high contrast modes
     if ([`hc`, `hcDark`].includes(mode)) {
         return;
     }
 
     const outputPath = mode === `dark` ?
-        `${path}drawable-night/${name}.xml` :
-        `${path}drawable/${name}.xml`;
+        `${assetBuildPath}drawable-night/${name}.xml` :
+        `${assetBuildPath}drawable/${name}.xml`;
 
     fs.ensureFileSync(outputPath);
 

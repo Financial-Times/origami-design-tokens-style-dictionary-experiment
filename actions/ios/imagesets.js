@@ -12,7 +12,7 @@ module.exports = {
     // and resolved dictionary object containing all the tokens and the platform configuration
     // of the platform that called this action.
     do: (dictionary, config) => {
-        const { path, buildPath, mode } = config;
+        const { assetBuildPath, mode } = config;
 
         dictionary.allProperties
             .filter(token => {
@@ -35,15 +35,9 @@ module.exports = {
                 // to translate it to a PNG or Android Vector Drawable
                 const svg = src(dictionary.properties);
 
-                // Make sure the directory exists and write the new SVG file
-                const outputPath = `${buildPath || ''}/${name}-${mode}.svg`;
-                fs.ensureFileSync(outputPath);
-                fs.writeFileSync(outputPath, svg);
-                console.log(`✔︎  ${outputPath}`);
-
                 // This will take the SVG and convert it to a PNG and create the metadata
                 // for an iOS imageset
-                generateImageset({ path, name, svg, mode });
+                generateImageset({ assetBuildPath, name, svg, mode });
             });
     },
 
@@ -58,11 +52,11 @@ module.exports = {
  * @param {Object} options
  * @param {String} options.svg - The content of the SVG that will be turned into a PNG. The SVG content at this point should have had all the token references inside of it resolved.
  * @param {String} options.name - The name of the image token
- * @param {String} options.path - The build path for iOS. This will be defined in the configuration
+ * @param {String} options.assetBuildPath - The build path for iOS. This will be defined in the configuration
  * @param {String} options.mode - The current mode (light or dark) Style Dictionary is building in.
  */
-function generateImageset({ svg, name, path, mode }) {
-    const outputPath = `${path}StyleDictionary.xcassets/${name}.imageset`;
+function generateImageset({ svg, name, assetBuildPath, mode }) {
+    const outputPath = `${assetBuildPath}StyleDictionary.xcassets/${name}.imageset`;
     fs.ensureDirSync(outputPath);
 
     // The imageset might already exist because Style Dictionary is run multiple

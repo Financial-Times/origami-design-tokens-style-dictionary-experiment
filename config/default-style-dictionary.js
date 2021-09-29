@@ -16,11 +16,12 @@ const styleDictionary = StyleDictionary.extend({
         generateColorsets: require('../actions/ios/colorsets.js'),
         generateIosGraphics: require('../actions/ios/imagesets'),
         generateAndroidGraphics: require('../actions/android/vector'),
-        generateWebGraphics: require('../actions/generateWebGraphics'),
+        generateWebGraphics: require('../actions/web/svg-images')
     },
     // custom transforms
     transform: {
         'attribute/cti': require('../transforms/attributeCTI'),
+        'colorRGB': require('../transforms/colorRGB'),
     },
     // custom formats
     format: {
@@ -41,7 +42,8 @@ module.exports = (brand) => {
             css: {
                 transformGroup: `css`,
                 buildPath: webPath,
-                actions: [`generateWebGraphics`],
+                assetBuildPath: `${webPath}/images/`,
+                actions: ['generateWebGraphics'],
                 files: [{
                     destination: `variables.css`,
                     format: `css/variables`,
@@ -62,7 +64,7 @@ module.exports = (brand) => {
 
             ios: {
                 buildPath: iosPath,
-                transforms: [`attribute/cti`, `name/ti/camel`, `color/UIColorSwift`, `size/swift/remToCGFloat`],
+                transforms: [`attribute/cti`, `name/ti/camel`, `colorRGB`, `size/swift/remToCGFloat`],
                 actions: [`generateColorsets`],
                 files: [{
                     destination: `Color.swift`,
@@ -86,9 +88,7 @@ module.exports = (brand) => {
             iosAssets: {
                 transforms: [`attribute/cti`, `color/hex`, `size/remToPx`, `name/ti/camel`],
                 actions: [`generateIosGraphics`],
-                buildPath: `${iosPath}/images/`,
-                path: iosPath,
-                mode: `light`
+                assetBuildPath: iosPath,
             },
 
             android: {
@@ -117,9 +117,7 @@ module.exports = (brand) => {
             androidAssets: {
                 transforms: [`attribute/cti`, `color/hex`, `size/remToPx`, `name/ti/camel`],
                 actions: [`generateAndroidGraphics`],
-                buildPath: `${androidPath}/images/`,
-                path: androidPath,
-                mode: `light`
+                assetBuildPath: androidPath
             }
         }
     });

@@ -15,11 +15,13 @@ const styleDictionary = StyleDictionary.extend({
     action: {
         generateColorsets: require('../actions/ios/colorsets.js'),
         generateIosGraphics: require('../actions/ios/imagesets'),
-        generateAndroidGraphics: require('../actions/android/vector')
+        generateAndroidGraphics: require('../actions/android/vector'),
+        generateWebGraphics: require('../actions/web/svg-images')
     },
     // custom transforms
     transform: {
-        'attribute/cti': require('../transforms/attributeCTI')
+        'attribute/cti': require('../transforms/attributeCTI'),
+        'colorRGB': require('../transforms/colorRGB'),
     },
 });
 
@@ -36,6 +38,8 @@ module.exports = (brand) => {
             css: {
                 transformGroup: `css`,
                 buildPath: webPath,
+                assetBuildPath: `${webPath}/images/`,
+                actions: ['generateWebGraphics'],
                 files: [{
                     destination: `variables-dark.css`,
                     format: `css/variables`,
@@ -44,20 +48,21 @@ module.exports = (brand) => {
                     options: {
                         outputReferences: true
                     }
-                }]
+                }],
+                mode: `dark`
             },
 
             ios: {
                 buildPath: iosPath,
-                transforms: [`attribute/cti`, `name/ti/camel`, `color/UIColorSwift`, `size/swift/remToCGFloat`],
-                actions: [`generateColorsets`]
+                transforms: [`attribute/cti`, `name/ti/camel`, `colorRGB`, `size/swift/remToCGFloat`],
+                actions: [`generateColorsets`],
+                mode: `dark`
             },
 
             iosAssets: {
                 transforms: [`attribute/cti`, `color/hex`, `size/remToPx`, `name/ti/camel`],
                 actions: [`generateIosGraphics`],
-                buildPath: `${webPath}/images/`,
-                path: iosPath,
+                assetBuildPath: iosPath,
                 mode: `dark`
             },
 
@@ -75,8 +80,7 @@ module.exports = (brand) => {
             androidAssets: {
                 transforms: [`attribute/cti`, `color/hex`, `size/remToPx`, `name/ti/camel`],
                 actions: [`generateAndroidGraphics`],
-                buildPath: `${webPath}/images/`,
-                path: androidPath,
+                assetBuildPath: androidPath,
                 mode: `dark`
             }
         }

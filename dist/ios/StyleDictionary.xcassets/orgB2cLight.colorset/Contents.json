@@ -8,15 +8,31 @@
       "idiom": "universal",
       "color": {
         "color-space": "srgb",
-        "components": "UIColor(red: 0.600, green: 0.776, blue: 0.984, alpha: 1)"
+        "components": {
+          "alpha": "1.0000",
+          "blue": "0.9843",
+          "red": "0.6000",
+          "green": "0.7765"
+        }
       }
     },
     {
       "idiom": "universal",
       "color": {
         "color-space": "srgb",
-        "components": "UIColor(red: 0.600, green: 0.776, blue: 0.984, alpha: 1)"
-      }
+        "components": {
+          "alpha": "1.0000",
+          "blue": "0.9843",
+          "red": "0.6000",
+          "green": "0.7765"
+        }
+      },
+      "appearances": [
+        {
+          "appearance": "luminosity",
+          "value": "dark"
+        }
+      ]
     }
   ]
 }
