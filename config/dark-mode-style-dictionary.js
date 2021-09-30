@@ -1,13 +1,9 @@
 const StyleDictionary = require('style-dictionary');
-const fs = require('fs-extra');
 
 const buildPath = 'dist/'
 const webPath = `${buildPath}/web/`
 const iosPath = `${buildPath}/ios/`
 const androidPath = `${buildPath}/android/styledictionary/src/main/res/`;
-
-console.log(`removing previous build...`);
-fs.removeSync(buildPath);
 
 // Adding custom actions, transforms, and formats
 const styleDictionary = StyleDictionary.extend({
@@ -26,13 +22,14 @@ const styleDictionary = StyleDictionary.extend({
 });
 
 
+const mode = 'dark';
 module.exports = (brand) => {
     return styleDictionary.extend({
         include: [
-            `tokens/brands/${brand}/**/!(*.dark).js`
+            `tokens/brands/${brand}/**/!(*.${mode}).js`
         ],
         source: [
-            `tokens/brands/${brand}/**/*.dark.js`
+            `tokens/brands/${brand}/**/*.${mode}.js`
         ],
         platforms: {
             css: {
@@ -41,29 +38,29 @@ module.exports = (brand) => {
                 assetBuildPath: `${webPath}/images/`,
                 actions: ['generateWebGraphics'],
                 files: [{
-                    destination: `variables-dark.css`,
+                    destination: `variables-${mode}.css`,
                     format: `css/variables`,
-                    // only putting in the tokens from files with '.dark' in the filepath
-                    filter: (token) => token.filePath.indexOf(`.dark`) > -1,
+                    // only putting in the tokens from files with '.mode' (e.g. `.dark`) in the filepath
+                    filter: (token) => token.filePath.indexOf(`.${mode}`) > -1,
                     options: {
                         outputReferences: true
                     }
                 }],
-                mode: `dark`
+                mode
             },
 
             ios: {
                 buildPath: iosPath,
                 transforms: [`attribute/cti`, `name/ti/camel`, `colorRGB`, `size/swift/remToCGFloat`],
                 actions: [`generateColorsets`],
-                mode: `dark`
+                mode
             },
 
             iosAssets: {
                 transforms: [`attribute/cti`, `color/hex`, `size/remToPx`, `name/ti/camel`],
                 actions: [`generateIosGraphics`],
                 assetBuildPath: iosPath,
-                mode: `dark`
+                mode
             },
 
             android: {
@@ -72,16 +69,17 @@ module.exports = (brand) => {
                 files: [{
                     destination: `values-night/colors.xml`,
                     format: `android/resources`,
-                    // only outputting the tokens from files with '.dark' in the filepath
-                    filter: (token) => token.filePath.indexOf(`.dark`) > -1
-                }]
+                    // only outputting the tokens from files with '.mode' (e.g. `.dark`) in the filepath
+                    filter: (token) => token.filePath.indexOf(`.${mode}`) > -1
+                }],
+                mode
             },
 
             androidAssets: {
                 transforms: [`attribute/cti`, `color/hex`, `size/remToPx`, `name/ti/camel`],
                 actions: [`generateAndroidGraphics`],
                 assetBuildPath: androidPath,
-                mode: `dark`
+                mode
             }
         }
     })

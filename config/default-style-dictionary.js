@@ -1,13 +1,9 @@
 const StyleDictionary = require('style-dictionary');
-const fs = require('fs-extra');
 
 const buildPath = 'dist/'
 const webPath = `${buildPath}/web/`
 const iosPath = `${buildPath}/ios/`
 const androidPath = `${buildPath}/android/styledictionary/src/main/res/`;
-
-console.log(`removing previous build...`);
-fs.removeSync(buildPath);
 
 // Adding custom actions, transforms, and formats
 const styleDictionary = StyleDictionary.extend({
